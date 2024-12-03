@@ -1,0 +1,253 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    color: white;
+    font-family: "Verdana";
+}
+
+html,
+body,
+main {
+    height: 100%;
+}
+
+body {
+    background-color: #09090B;
+}
+
+main {
+    width: 70%;
+    margin: 0px auto;
+}
+
+.races-items {
+    padding: 20px 0px;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.races-items .race {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    border: 2px solid white;
+    border-radius: 20px;
+    background-color: #171717;
+}
+
+.races-items .race input {
+    width: 50%;
+    text-align: center;
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    font-weight: bold;
+    appearance: textfield;
+    animation-name: textAnim;
+    animation-iteration-count: infinite;
+    animation-duration: 1.3s;
+    animation-timing-function: linear;
+}
+
+@keyframes textAnim {
+    0% {
+        color: silver;
+    }
+
+    50% {
+        color: rgb(104, 104, 104);
+    }
+
+    100% {
+        color: silver;
+    }
+}
+
+.races-items .race h1 {
+    font-size: 28px;
+}
+
+.races-items .race h2 {
+    font-size: 18px;
+}
+
+.green {
+    color: greenyellow !important;
+}
+
+.silver {
+    color: silver !important;
+}
+
+.red {
+    color: red !important;
+}
+
+.gold {
+    color: gold !important;
+}
+
+.races {
+    position: relative;
+}
+
+.races button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    background-color: #171717;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    top: 20px;
+    right: -60px;
+    font-size: 100%;
+    transition: 0.3s;
+}
+
+.races button:active {
+    transform: scale(0.95);
+}
+
+.races button svg {
+    font-size: 24px;
+}
+
+.auction-main {
+    padding: 20px;
+    margin: 20px 0px;
+    border: 2px solid white;
+    border-radius: 20px;
+    background-color: #171717;
+}
+
+.auction-main>h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.auction-items {
+    height: 450px;
+    display: grid;
+    gap: 20px;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.auction-items .auction-item {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    border: 2px solid white;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: center bottom;
+    padding: 10px 20px;
+}
+
+.auction-items .auction-item .auction-item-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px auto 40px auto;
+    width: 100%;
+}
+
+.auction-items .auction-item .auction-item-buttons button {
+    background-color: #171717;
+    border: 2px solid white;
+    padding: 10px 0px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.auction-items .auction-item .auction-item-buttons button:active {
+    transform: scale(0.95);
+}
+
+.auction-item-bet {
+    font-size: 26px;
+    text-align: center;
+}
+
+.past-bets {
+    border: 2px solid white;
+    margin-bottom: 20px;
+}
+
+.auction-main>button {
+    display: block;
+    margin: 40px auto 20px auto;
+    background-color: transparent;
+    cursor: pointer;
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    gap: 10px;
+    font-weight: bold;
+}
+
+button:disabled {
+    pointer-events: none;
+    border: 2px solid rgb(75, 75, 75) !important;
+    background-color: rgb(75, 75, 75) !important;
+}
+
+.past-bets {
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #171717;
+}
+
+.bids {
+    overflow: auto;
+    max-height: 400px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+}
+
+.bids .bid:nth-of-type(odd) {
+    background-color: rgb(75, 75, 75);
+}
+
+.bids .bid {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 10px;
+}
+
+.bets-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bets-header h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.bets-header button {
+    font-weight: bold;
+    padding: 5px 15px;
+    border: 2px solid white;
+    border-radius: 20px;
+    height: 100%;
+    background-color: transparent;
+    cursor: pointer;
+}
