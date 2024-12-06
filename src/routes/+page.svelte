@@ -7,7 +7,7 @@
 	import type { race } from "$lib/types"
 
 	let races = $state<Record<string, race>>({
-		tauren: { name: "Tauren", points: 0, image: "/models/tauren.avif", bet: 0 },
+		tauren: { name: "Tauren", points: 1500, image: "/models/tauren.avif", bet: 0 },
 		undead: { name: "Undead", points: 0, image: "/models/undead.avif", bet: 0 },
 		orc: { name: "Orc", points: 0, image: "/models/orc.avif", bet: 0 },
 		troll: { name: "Troll", points: 0, image: "/models/troll.png", bet: 0 }
@@ -84,7 +84,7 @@
 			}
 		}
 
-		// Insert bids into history
+		// Insert bets into history
 		insertBid(allBets)
 	}
 

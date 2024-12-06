@@ -1,4 +1,5 @@
 import { browser } from "$app/environment"
+import toast from "svelte-french-toast"
 import type { bid } from "$lib/types"
 
 export function getLocalStorage() {
@@ -33,6 +34,12 @@ export function clearBetHistory() {
         localStorage.setItem("bid_history", JSON.stringify([]))
 
         bid_history.bids = getLocalStorage()
+
+        toast.success("Deleted auction history", {
+            style: "background-color: #333; color: #fff;",
+            position: "bottom-right",
+            duration: 2000
+        })
     }
 }
 

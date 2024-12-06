@@ -35,7 +35,6 @@ main {
     align-items: center;
     gap: 15px;
     padding: 20px;
-    border: 2px solid white;
     border-radius: 20px;
     background-color: #171717;
 }
@@ -107,13 +106,13 @@ main {
     width: 40px;
     background-color: #171717;
     cursor: pointer;
-    border: 2px solid white;
     border-radius: 10px;
     padding: 10px;
     top: 20px;
     right: -60px;
     font-size: 100%;
     transition: 0.3s;
+    border: none;
 }
 
 .races button:active {
@@ -127,7 +126,6 @@ main {
 .auction-main {
     padding: 20px;
     margin: 20px 0px;
-    border: 2px solid white;
     border-radius: 20px;
     background-color: #171717;
 }
@@ -149,11 +147,11 @@ main {
     display: flex;
     flex-direction: column;
     border-radius: 20px;
-    border: 2px solid white;
     background-repeat: no-repeat;
     background-size: 60%;
     background-position: center bottom;
     padding: 10px 20px;
+    background-color: #09090B;
 }
 
 .auction-items .auction-item .auction-item-buttons {
@@ -165,14 +163,14 @@ main {
 }
 
 .auction-items .auction-item .auction-item-buttons button {
-    background-color: #171717;
-    border: 2px solid white;
+    background-color: rgb(75, 75, 75);
     padding: 10px 0px;
     font-weight: bold;
     letter-spacing: 1px;
     cursor: pointer;
     border-radius: 20px;
     transition: 0.3s;
+    border: none;
 }
 
 .auction-items .auction-item .auction-item-buttons button:active {
@@ -182,29 +180,38 @@ main {
 .auction-item-bet {
     font-size: 26px;
     text-align: center;
+    font-weight: bold;
 }
 
 .past-bets {
-    border: 2px solid white;
     margin-bottom: 20px;
 }
 
 .auction-main>button {
     display: block;
     margin: 40px auto 20px auto;
-    background-color: transparent;
+    background-color: rgb(75, 75, 75);
     cursor: pointer;
-    border: 2px solid white;
     border-radius: 10px;
     padding: 10px;
     gap: 10px;
     font-weight: bold;
+    border: none;
+    transition: 0.3s;
+}
+
+.auction-main>button:active {
+    transform: scale(0.95);
+}
+
+
+.auction-main>button:disabled {
+    background-color: #353535 !important;
 }
 
 button:disabled {
     pointer-events: none;
-    border: 2px solid rgb(75, 75, 75) !important;
-    background-color: rgb(75, 75, 75) !important;
+    background-color: #171717 !important;
 }
 
 .past-bets {
@@ -230,11 +237,19 @@ button:disabled {
     grid-template-rows: auto;
     grid-template-columns: repeat(4, 1fr);
     padding: 10px;
+    text-align: center;
+}
+
+.bids .bid:first-of-type {
+    font-weight: bold;
 }
 
 .bets-header {
     display: flex;
+    align-items: baseline;
+    height: 50px;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 .bets-header h1 {
@@ -245,9 +260,13 @@ button:disabled {
 .bets-header button {
     font-weight: bold;
     padding: 5px 15px;
-    border: 2px solid white;
     border-radius: 20px;
-    height: 100%;
-    background-color: transparent;
+    background-color: rgb(75, 75, 75);
     cursor: pointer;
+    border: none;
+    transition: 0.3s;
+}
+
+.bets-header button:active {
+    transform: scale(0.95);
 }
