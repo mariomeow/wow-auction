@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { scale } from "svelte/transition"
 
-	let { race, decrementBet, incrementBet, highestBid, setBet } = $props()
+	let { race, maxBet, decrementBet, incrementBet, highestBid, setBet } = $props()
 </script>
 
 <div class="auction-item" style:background-image={`url(${race[1].image})`}>
@@ -14,6 +14,10 @@
 		<button
 			disabled={highestBid[1] + 50 > race[1].points || highestBid[0] == race[0]}
 			onclick={() => setBet(race[0], highestBid[1] + 50)}>Highest Bid + 50</button
+		>
+		<button
+			disabled={race[1].points == 0 || race[1].points <= highestBid[1]}
+			onclick={() => maxBet(race[0])}>Max Bet</button
 		>
 	</div>
 	{#key race[1].bet}

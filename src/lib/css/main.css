@@ -21,7 +21,7 @@ main {
 }
 
 .races-items {
-    padding: 20px 0px;
+    padding: 20px 0px 0px 0px;
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: repeat(4, 1fr);
@@ -97,8 +97,19 @@ main {
     position: relative;
 }
 
-.races button {
+.races-buttons {
+    top: 20px;
+    right: -50px;
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.races button,
+.races a {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -107,20 +118,23 @@ main {
     background-color: #171717;
     cursor: pointer;
     border-radius: 10px;
-    padding: 10px;
-    top: 20px;
-    right: -60px;
-    font-size: 100%;
     transition: 0.3s;
     border: none;
 }
 
-.races button:active {
+.races button:active,
+.races a:active {
     transform: scale(0.95);
 }
 
-.races button svg {
-    font-size: 24px;
+.races button svg,
+.races a svg {
+    font-size: 20px;
+}
+
+.races button img {
+    max-width: 100%;
+    border-radius: 10px;
 }
 
 .auction-main {
@@ -269,4 +283,21 @@ button:disabled {
 
 .bets-header button:active {
     transform: scale(0.95);
+}
+
+.character-buttons {
+    position: absolute;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    top: 50px;
+    left: 50px;
+    gap: 10px;
+}
+
+.item-preview {
+    padding: 20px;
+    margin: 20px 0px;
+    border-radius: 20px;
+    background-color: #171717;
 }

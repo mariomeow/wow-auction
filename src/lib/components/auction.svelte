@@ -1,6 +1,14 @@
 <script lang="ts">
-	let { races, endAuction, decrementBet, incrementBet, highestBid, setBet, totalBidAmount } =
-		$props()
+	let {
+		races,
+		maxBet,
+		endAuction,
+		decrementBet,
+		incrementBet,
+		highestBid,
+		setBet,
+		totalBidAmount
+	} = $props()
 
 	import AuctionItem from "./items/auction-item.svelte"
 </script>
@@ -9,7 +17,7 @@
 	<h1>Auction</h1>
 	<div class="auction-items">
 		{#each Object.entries(races) as race}
-			<AuctionItem {race} {decrementBet} {incrementBet} {highestBid} {setBet} />
+			<AuctionItem {race} {maxBet} {decrementBet} {incrementBet} {highestBid} {setBet} />
 		{/each}
 	</div>
 	<button disabled={totalBidAmount == 0} onclick={endAuction}>End Auction</button>

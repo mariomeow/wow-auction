@@ -10,7 +10,7 @@ export function getLocalStorage() {
 
         localStorage.setItem("bid_history", JSON.stringify([]))
 
-        getLocalStorage()
+        return []
     }
 }
 
@@ -43,4 +43,25 @@ export function clearBetHistory() {
     }
 }
 
+function getMainCharacterIndex() {
+    if (browser) {
+        const mainIndex: string | null = localStorage.getItem("mainIndex")
+
+        if (mainIndex) return Number(mainIndex)
+
+        localStorage.setItem("mainIndex", "0")
+    }
+
+    return 0
+}
+
+export function setMainCharacterIndex(index: number) {
+    if (browser) {
+        localStorage.setItem("mainIndex", String(index))
+
+        mainIndex.index = getMainCharacterIndex()
+    }
+}
+
 export const bid_history = $state({ bids: getLocalStorage() })
+export const mainIndex = $state({ index: getMainCharacterIndex() })

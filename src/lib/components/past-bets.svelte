@@ -14,7 +14,7 @@
 			<button
 				onclick={() => {
 					clearBetHistory()
-				}}>Reset</button
+				}}>Clear</button
 			>
 			<button
 				onclick={() => {

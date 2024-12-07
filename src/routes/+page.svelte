@@ -3,11 +3,12 @@
 	import Race from "$lib/components/items/race.svelte"
 	import Auction from "$lib/components/auction.svelte"
 	import PastBets from "$lib/components/past-bets.svelte"
+	import ItemPreview from "$lib/components/item-preview.svelte"
 	import { insertBid, bid_history, clearBetHistory } from "$lib/scripts/localstorage.svelte"
 	import type { race } from "$lib/types"
 
 	let races = $state<Record<string, race>>({
-		tauren: { name: "Tauren", points: 1500, image: "/models/tauren.avif", bet: 0 },
+		tauren: { name: "Tauren", points: 0, image: "/models/tauren.avif", bet: 0 },
 		undead: { name: "Undead", points: 0, image: "/models/undead.avif", bet: 0 },
 		orc: { name: "Orc", points: 0, image: "/models/orc.avif", bet: 0 },
 		troll: { name: "Troll", points: 0, image: "/models/troll.png", bet: 0 }
@@ -94,14 +95,23 @@
 		}
 	}
 
-	let appState: "setPoints" | undefined = $state(undefined)
+	function maxBet(race: string) {
+		if (races[race].points == 0) return
+
+		races[race].bet = races[race].points
+	}
+
+	let appState: "setPoints" | "chooseCharacter" | undefined = $state(undefined)
+	let { data } = $props()
 </script>
 
-<Races bind:appState {finish}>
+<Races bind:appState {finish} characters={data.characters}>
 	{#each Object.entries(races) as race}
 		<Race {race} {appState} />
 	{/each}
 </Races>
+
+<ItemPreview />
 
 <Auction
 	{races}
@@ -111,6 +121,7 @@
 	{highestBid}
 	{setBet}
 	{totalBidAmount}
+	{maxBet}
 />
 
 {#if bid_history?.bids?.length > 0}
