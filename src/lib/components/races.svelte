@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_CLIENT_ID, PUBLIC_URL } from "$env/static/public"
+	import { env } from "$env/dynamic/public"
 	import { fly } from "svelte/transition"
 	import Icon from "@iconify/svelte"
 	import { page } from "$app/stores"
@@ -30,7 +30,7 @@
 		{/if}
 		{#if !$page.data.authorized}
 			<a
-				href={`https://oauth.battle.net/authorize?response_type=code&scope=openid%20wow.profile&redirect_uri=${PUBLIC_URL}&state=AbCdEfG&client_id=${PUBLIC_CLIENT_ID}`}
+				href={`https://oauth.battle.net/authorize?response_type=code&scope=openid%20wow.profile&redirect_uri=${env.PUBLIC_URL}&state=AbCdEfG&client_id=${env.PUBLIC_CLIENT_ID}`}
 				><Icon icon="material-symbols:login" /></a
 			>
 		{:else}

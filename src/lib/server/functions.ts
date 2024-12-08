@@ -1,11 +1,11 @@
-import { CLIENT_SECRET } from "$env/static/private"
-import { PUBLIC_CLIENT_ID, PUBLIC_URL, PUBLIC_PROFILE_US, PUBLIC_PROFILE_EU } from "$env/static/public"
+import { env } from "$env/dynamic/private"
+import { env as env2 } from "$env/dynamic/public"
 
 export async function getAccessToken(code: string) {
-    const request = await fetch(`https://oauth.battle.net/token?redirect_uri=${PUBLIC_URL}&grant_type=authorization_code&code=${code}`, {
+    const request = await fetch(`https://oauth.battle.net/token?redirect_uri=${env2.PUBLIC_URL}&grant_type=authorization_code&code=${code}`, {
         method: "POST",
         headers: {
-            "Authorization": `Basic ${btoa(PUBLIC_CLIENT_ID + ":" + CLIENT_SECRET)}`
+            "Authorization": `Basic ${btoa(env2.PUBLIC_CLIENT_ID + ":" + env.CLIENT_SECRET)}`
         }
     })
 
@@ -24,7 +24,7 @@ export async function getCharacters(access_token: string) {
     let na_characters = { wow_accounts: [{ characters: [] }] }
 
     try {
-        const request_na = await fetch(PUBLIC_PROFILE_US, {
+        const request_na = await fetch(env2.PUBLIC_PROFILE_US, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${access_token}`
@@ -37,7 +37,7 @@ export async function getCharacters(access_token: string) {
     }
 
     try {
-        const request_eu = await fetch(PUBLIC_PROFILE_EU, {
+        const request_eu = await fetch(env2.PUBLIC_PROFILE_EU, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${access_token}`
