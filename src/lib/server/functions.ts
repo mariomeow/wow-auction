@@ -9,8 +9,6 @@ export async function getAccessToken(code: string) {
         }
     })
 
-    console.log(123)
-
     const { access_token, expires_in }: { access_token: string, expires_in: number } = await request.json()
 
     const expires_at: number = Math.floor(new Date().getTime() / 1000) + expires_in
