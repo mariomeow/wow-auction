@@ -9,6 +9,8 @@ export async function load({ cookies }) {
 
     const { expires_at } = JSON.parse(access_token)
 
+    console.log(1)
+
     if (expires_at < timeInSeconds) return { authorized: false }
 
     return {
