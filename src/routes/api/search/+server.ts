@@ -1,11 +1,15 @@
 import { json } from "@sveltejs/kit"
 import type { itemType } from "$lib/types"
 
-export async function GET({ url, cookies }) {
+export async function GET({ url, cookies, setHeaders }) {
+    setHeaders({
+        "Cache-Control": "max-age=604800"
+    })
+
     const access_token_cookie: string | undefined = cookies.get("access_token")
     const query: string | null = url.searchParams.get("query")
 
-    if (!access_token_cookie || !query) return json({ item: null })
+    if (!access_token_cookie || !query) return json({ items_result: [] })
 
     const access_token_json: { access_token: string, expires_at: number } = JSON.parse(access_token_cookie)
 
@@ -18,25 +22,25 @@ export async function GET({ url, cookies }) {
 
     const { results } = await itemsRequest.json()
 
-    console.log(results)
-
-    if (results.length > 1) results.length = 1
-
-    let item: itemType | null = null
+    const items: itemType[] = []
 
     if (results.length > 0) {
-        const image_url: string = await getItemImage(access_token_json.access_token, results[0].data.id)
+        for (const resultItem of results) {
+            const image_url: string | null = await getItemImage(access_token_json.access_token, resultItem.data.id)
 
-        item = {
-            id: results[0].data.id,
-            name: results[0].data.name.en_GB,
-            quality: (results[0].data.quality.type).toLowerCase(),
-            image_url
+            if (!image_url) continue
+
+            items.push({
+                id: resultItem.data.id,
+                name: resultItem.data.name.en_GB,
+                quality: (resultItem.data.quality.type).toLowerCase(),
+                image_url
+            })
         }
     }
 
     return json({
-        item_result: item
+        items_result: items
     })
 }
 
@@ -50,5 +54,5 @@ async function getItemImage(access_token: string, id: number): Promise<string> {
 
     const { assets } = await imageRequest.json()
 
-    return assets[0].value
+    return assets?.length > 0 ? assets[0].value : null
 }

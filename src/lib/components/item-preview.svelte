@@ -2,32 +2,53 @@
 	import type { itemType } from "$lib/types"
 
 	let search: string = $state("")
-	let item: itemType | null = $state(null)
+	let items: itemType[] = $state([])
 	let timer: number
 
 	async function getItems() {
 		clearTimeout(timer)
 
-		if (search.length < 3) return
+		if (search.length < 3) {
+			items = []
+			return
+		}
 
 		timer = setTimeout(async () => {
 			const request = await fetch(`/api/search?query=${search}`, {
 				method: "GET"
 			})
 
-			const { item_result } = await request.json()
+			const { items_result } = await request.json()
 
-			item = item_result
+			items = items_result
 		}, 1000)
 	}
+
+	$effect(() => {
+		search = ""
+	})
 </script>
 
 <div class="item-preview">
-	<input type="text" placeholder="Item name..." bind:value={search} oninput={getItems} />
-	{#if item}
-		<div class="item-container">
-			<h1 class={item.quality}>{item.name}</h1>
-			<img src={item.image_url} alt={item.name} />
-		</div>
-	{/if}
+	<div class="search">
+		<input
+			type="text"
+			maxlength="30"
+			placeholder="Enter item name"
+			bind:value={search}
+			oninput={getItems}
+		/>
+		{#if search}
+			<div class="items-container">
+				{#if items.length > 0}
+					{#each items as { name, quality, image_url }}
+						<button>
+							<img src={image_url} alt={name} />
+							<p class={quality}>{name}</p>
+						</button>
+					{/each}
+				{/if}
+			</div>
+		{/if}
+	</div>
 </div>
