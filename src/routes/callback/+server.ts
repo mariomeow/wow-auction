@@ -7,7 +7,7 @@ export async function GET({ url, cookies }) {
 
     if (!code) redirect(302, "/")
 
-    const { access_token } = await getAccessToken(code)
+    const { access_token, expires_at } = await getAccessToken(code)
 
     const { na_characters, eu_characters }: { na_characters: character_item[] | [], eu_characters: character_item[] | [] } = await getCharacters(access_token)
 
@@ -70,7 +70,7 @@ export async function GET({ url, cookies }) {
     }
 
     cookies.set("characters", JSON.stringify(allCharacters), { sameSite: "lax", httpOnly: true, path: "/" })
-    cookies.set("access_token", access_token, { sameSite: "lax", httpOnly: true, path: "/" })
+    cookies.set("access_token", JSON.stringify({ access_token, expires_at }), { sameSite: "lax", httpOnly: true, path: "/" })
 
     redirect(307, "/")
 }

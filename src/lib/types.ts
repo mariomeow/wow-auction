@@ -36,3 +36,10 @@ export type character_item = {
     region: "eu" | "na",
     image: string
 }
+
+export type itemType = {
+    id?: number,
+    name?: string,
+    quality?: string,
+    image_url?: string
+}

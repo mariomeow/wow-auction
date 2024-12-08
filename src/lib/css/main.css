@@ -301,3 +301,22 @@ button:disabled {
     border-radius: 20px;
     background-color: #171717;
 }
+
+.item-preview input[type="text"] {
+    margin-bottom: 20px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 5px 0px 5px 0px;
+    border-bottom: 1px solid silver;
+}
+
+.item-container {
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #09090B;
+}
+
+.legendary {
+    color: orange;
+}
