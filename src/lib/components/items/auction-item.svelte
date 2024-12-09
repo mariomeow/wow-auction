@@ -16,7 +16,9 @@
 			onclick={() => setBet(race[0], highestBid[1] + 50)}>Highest Bid + 50</button
 		>
 		<button
-			disabled={race[1].points == 0 || race[1].points <= highestBid[1]}
+			disabled={race[1].points == 0 ||
+				race[1].points < highestBid[1] ||
+				race[1].points == race[1].bet}
 			onclick={() => maxBet(race[0])}>Max Bet</button
 		>
 	</div>
