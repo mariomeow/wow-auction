@@ -4,12 +4,13 @@
 
 	let search: string = $state("")
 	let timer: number
+	let inputElement: HTMLInputElement
 
 	function getItems(): Promise<itemType[]> {
 		return new Promise((resolve, reject) => {
 			clearTimeout(timer)
 
-			if (search.length <= 3) {
+			if (search.length < 3) {
 				resolve([])
 				return
 			}
@@ -31,6 +32,7 @@
 	}
 
 	$effect(() => {
+		inputElement.focus()
 		search = ""
 	})
 
@@ -46,8 +48,14 @@
 	}}
 >
 	<div class="edit-box">
-		<input type="text" placeholder="Enter item name..." bind:value={search} oninput={getItems} />
-		{#if search != "" && search.length > 3}
+		<input
+			bind:this={inputElement}
+			type="text"
+			placeholder="Enter item name..."
+			bind:value={search}
+			oninput={getItems}
+		/>
+		{#if search != "" && search.length >= 3}
 			{#await getItems()}
 				<div class="searching">
 					<Icon icon="line-md:loading-twotone-loop" />

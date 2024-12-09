@@ -1,12 +1,5 @@
 <script lang="ts">
 	let { mousePosition } = $props()
-	/*
-			
-
-			ADD FOCUS TO INPUT EDIT
-	*/
-
-	$inspect(mousePosition)
 </script>
 
 <div class="mouse-info" style={`left: ${mousePosition.x + 10}px; top: ${mousePosition.y + 10}px`}>
