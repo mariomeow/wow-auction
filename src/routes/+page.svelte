@@ -4,6 +4,8 @@
 	import Auction from "$lib/components/auction.svelte"
 	import PastBets from "$lib/components/past-bets.svelte"
 	import ItemPreview from "$lib/components/item-preview.svelte"
+	import Editing from "$lib/components/editing.svelte"
+	import ItemInformation from "$lib/components/item-information.svelte"
 	import { insertBid, bid_history, clearBetHistory } from "$lib/scripts/localstorage.svelte"
 	import type { race } from "$lib/types"
 
@@ -13,6 +15,20 @@
 		orc: { name: "Orc", points: 0, image: "/models/orc.avif", bet: 0 },
 		troll: { name: "Troll", points: 0, image: "/models/troll.png", bet: 0 }
 	})
+
+	let boxes: any[] = $state([])
+
+	function createBox() {
+		boxes.push([])
+	}
+
+	function insertItem(boxID: number) {
+		boxes[boxID].push({})
+	}
+
+	function removeBox(boxID: number) {
+		boxes.splice(boxID, 1)
+	}
 
 	let highestBid: [string, number] = $derived.by(() => {
 		let highest: [string, number] = ["", 0]
@@ -101,9 +117,54 @@
 		races[race].bet = races[race].points
 	}
 
-	let appState: "setPoints" | "chooseCharacter" | undefined = $state(undefined)
+	const boxInfo: { boxContainerIndex: number; boxIndex: number } = $state({
+		boxContainerIndex: 0,
+		boxIndex: 0
+	})
+
+	function openEditWindow(boxContainerIndex: number, boxIndex: number) {
+		boxInfo.boxContainerIndex = boxContainerIndex
+		boxInfo.boxIndex = boxIndex
+		editWindowState = "opened"
+	}
+
+	function setItem(id: number, name: string, quality: string, image_url: string) {
+		boxes[boxInfo.boxContainerIndex][boxInfo.boxIndex] = {
+			id,
+			name,
+			quality,
+			image_url,
+			revealed: false
+		}
+
+		editWindowState = "closed"
+	}
+
+	function revealPrize(boxContainerIndex: number, boxIndex: number) {
+		const box = boxes[boxContainerIndex][boxIndex]
+
+		if (Object.keys(box).length == 0 || box.revealed) return
+
+		box.revealed = true
+	}
+
+	let mousePosition = $state({
+		x: 0,
+		y: 0,
+		data: undefined
+	})
+
+	function pointerMove(e: PointerEvent) {
+		mousePosition.x = e.clientX
+		mousePosition.y = e.clientY
+	}
+
+	let editWindowState = $state<"opened" | "closed">("closed")
+	let appState: "setPoints" | "chooseCharacter" | "editing" | undefined = $state(undefined)
 	let { data } = $props()
 </script>
+
+<svelte:window onpointermove={pointerMove} />
 
 <Races bind:appState {finish} characters={data.characters}>
 	{#each Object.entries(races) as race}
@@ -111,7 +172,16 @@
 	{/each}
 </Races>
 
-<ItemPreview />
+<ItemPreview
+	{revealPrize}
+	{boxes}
+	{createBox}
+	{insertItem}
+	{appState}
+	{openEditWindow}
+	{removeBox}
+	bind:mousePosition
+/>
 
 <Auction
 	{races}
@@ -126,4 +196,12 @@
 
 {#if bid_history?.bids?.length > 0}
 	<PastBets {bid_history} {clearBetHistory} />
+{/if}
+
+{#if editWindowState == "opened"}
+	<Editing bind:editWindowState {setItem} />
+{/if}
+
+{#if mousePosition.data}
+	<ItemInformation {mousePosition} />
 {/if}
