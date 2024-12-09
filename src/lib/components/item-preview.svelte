@@ -9,7 +9,8 @@
 		insertItem,
 		appState,
 		openEditWindow,
-		removeBox
+		removeBox,
+		removeEmptyBoxes
 	} = $props()
 </script>
 
@@ -18,6 +19,7 @@
 		{#if appState == "editing"}
 			<button
 				onclick={() => {
+					removeEmptyBoxes()
 					appState = undefined
 				}}>Editing</button
 			>
@@ -30,7 +32,7 @@
 			>
 		{/if}
 	</div>
-	{#if boxes.length > 0}
+	{#if boxes?.length > 0}
 		<div class="boxes">
 			{#each boxes as box, i}
 				<div class="box">

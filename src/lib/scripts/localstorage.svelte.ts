@@ -63,5 +63,21 @@ export function setMainCharacterIndex(index: number) {
     }
 }
 
+export function saveBoxes(boxes: unknown[]) {
+    if (browser) {
+        localStorage.setItem("boxes", JSON.stringify(boxes))
+    }
+}
+
+export function getBoxes() {
+    if (browser) {
+        const boxes: string | null = localStorage.getItem("boxes")
+
+        if (boxes) return JSON.parse(boxes)
+
+        return []
+    }
+}
+
 export const bid_history = $state({ bids: getLocalStorage() })
 export const mainIndex = $state({ index: getMainCharacterIndex() })

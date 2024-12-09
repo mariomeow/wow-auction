@@ -6,7 +6,13 @@
 	import ItemPreview from "$lib/components/item-preview.svelte"
 	import Editing from "$lib/components/editing.svelte"
 	import ItemInformation from "$lib/components/item-information.svelte"
-	import { insertBid, bid_history, clearBetHistory } from "$lib/scripts/localstorage.svelte"
+	import {
+		insertBid,
+		bid_history,
+		clearBetHistory,
+		saveBoxes,
+		getBoxes
+	} from "$lib/scripts/localstorage.svelte"
 	import type { race } from "$lib/types"
 
 	let races = $state<Record<string, race>>({
@@ -16,7 +22,11 @@
 		troll: { name: "Troll", points: 0, image: "/models/troll.png", bet: 0 }
 	})
 
-	let boxes: any[] = $state([])
+	$effect(() => {
+		saveBoxes(boxes)
+	})
+
+	let boxes: any[] = $state(getBoxes())
 
 	function createBox() {
 		boxes.push([])
@@ -148,6 +158,10 @@
 		box.revealed = true
 	}
 
+	function removeEmptyBoxes() {
+		boxes = boxes.filter((box) => box.length > 0)
+	}
+
 	let mousePosition = $state({
 		x: 0,
 		y: 0,
@@ -180,6 +194,7 @@
 	{appState}
 	{openEditWindow}
 	{removeBox}
+	{removeEmptyBoxes}
 	bind:mousePosition
 />
 
