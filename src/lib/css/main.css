@@ -323,10 +323,6 @@ button:disabled {
     border: 2px solid #707070;
 }
 
-.legendary {
-    color: orange;
-}
-
 .boxes {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -507,9 +503,72 @@ button:disabled {
     padding: 10px;
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .mouse-info img {
     max-width: 100%;
+}
+
+.mouse-info .item-data {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.mouse-info .item-data p {
+    font-weight: bold;
+}
+
+.mouse-info .item-data span {
+    max-width: 300px;
+    font-size: 12px;
+}
+
+.mouse-info .item-data .item-data-line {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.currency {
+    gap: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.legendary {
+    color: #ff8000;
+}
+
+.epic {
+    color: #a335ee;
+}
+
+.rare {
+    color: #0070dd;
+}
+
+.uncommon,
+.spell {
+    color: #1eff00;
+}
+
+.common {
+    color: #fff;
+}
+
+.ilvl {
+    color: #ffd100;
 }

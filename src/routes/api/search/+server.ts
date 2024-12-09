@@ -34,6 +34,7 @@ export async function GET({ url, cookies, setHeaders }) {
                 id: resultItem.data.id,
                 name: resultItem.data.name.en_GB,
                 quality: (resultItem.data.quality.type).toLowerCase(),
+                level: resultItem.data.level,
                 image_url
             })
         }

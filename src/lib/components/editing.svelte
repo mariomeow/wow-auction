@@ -9,7 +9,7 @@
 		return new Promise((resolve, reject) => {
 			clearTimeout(timer)
 
-			if (search.length < 3) {
+			if (search.length <= 3) {
 				resolve([])
 				return
 			}
@@ -55,10 +55,10 @@
 			{:then items}
 				{#if items.length > 0}
 					<div class="edit-box-items">
-						{#each items as { id, name, quality, image_url }}
+						{#each items as { id, name, quality, image_url, level }}
 							<button
-								onclick={() => {
-									setItem(id, name, quality, image_url)
+								onclick={async () => {
+									await setItem(id, name, quality, image_url, level)
 								}}
 							>
 								<img src={image_url} alt={name} />

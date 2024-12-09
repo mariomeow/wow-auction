@@ -13,6 +13,7 @@ export async function load({ cookies }) {
 
     return {
         authorized: true,
+        access_token: JSON.parse(access_token).access_token,
         characters: JSON.parse(characters) as character[]
     }
 }

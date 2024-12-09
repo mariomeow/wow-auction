@@ -22,6 +22,8 @@
 		troll: { name: "Troll", points: 0, image: "/models/troll.png", bet: 0 }
 	})
 
+	let { data } = $props()
+
 	$effect(() => {
 		saveBoxes(boxes)
 	})
@@ -138,12 +140,54 @@
 		editWindowState = "opened"
 	}
 
-	function setItem(id: number, name: string, quality: string, image_url: string) {
+	async function getItemInfo(access_token: string, id: number): Promise<unknown> {
+		const itemRequest = await fetch(
+			`https://eu.api.blizzard.com/data/wow/item/${id}?namespace=static-classic-eu&locale=en_GB`,
+			{
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${access_token}`
+				}
+			}
+		)
+
+		const { preview_item } = await itemRequest.json()
+
+		return {
+			binding: preview_item?.binding?.name,
+			weapon_damage: preview_item?.weapon?.damage?.display_string,
+			dps: preview_item?.weapon?.dps?.display_string,
+			attack_speed: preview_item?.weapon?.attack_speed?.display_string,
+			required_level: preview_item?.requirements?.level?.display_string,
+			inventory_type: preview_item?.inventory_type?.name,
+			weapon_type: preview_item?.item_subclass?.name,
+			durability: preview_item?.durability?.display_string,
+			stats: preview_item?.stats,
+			spells: preview_item?.spells,
+			sell_price: {
+				gold: Number(preview_item?.sell_price?.display_strings?.gold),
+				silver: Number(preview_item?.sell_price?.display_strings?.silver),
+				copper: Number(preview_item?.sell_price?.display_strings?.copper)
+			}
+		}
+	}
+
+	async function setItem(
+		id: number,
+		name: string,
+		quality: string,
+		image_url: string,
+		level: number
+	) {
+		const item_info = await getItemInfo(data.access_token, id)
+
 		boxes[boxInfo.boxContainerIndex][boxInfo.boxIndex] = {
 			id,
 			name,
 			quality,
 			image_url,
+			level,
+			item_info,
 			revealed: false
 		}
 
@@ -175,7 +219,6 @@
 
 	let editWindowState = $state<"opened" | "closed">("closed")
 	let appState: "setPoints" | "chooseCharacter" | "editing" | undefined = $state(undefined)
-	let { data } = $props()
 </script>
 
 <svelte:window onpointermove={pointerMove} />
@@ -186,17 +229,19 @@
 	{/each}
 </Races>
 
-<ItemPreview
-	{revealPrize}
-	{boxes}
-	{createBox}
-	{insertItem}
-	{appState}
-	{openEditWindow}
-	{removeBox}
-	{removeEmptyBoxes}
-	bind:mousePosition
-/>
+{#if data.authorized}
+	<ItemPreview
+		{revealPrize}
+		{boxes}
+		{createBox}
+		{insertItem}
+		{appState}
+		{openEditWindow}
+		{removeBox}
+		{removeEmptyBoxes}
+		bind:mousePosition
+	/>
+{/if}
 
 <Auction
 	{races}

@@ -41,5 +41,6 @@ export type itemType = {
     id?: number,
     name?: string,
     quality?: string,
-    image_url?: string
+    image_url?: string,
+    level?: number
 }
