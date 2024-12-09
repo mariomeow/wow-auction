@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Races from "$lib/components/races.svelte"
+	import { onMount } from "svelte"
 	import Race from "$lib/components/items/race.svelte"
 	import Auction from "$lib/components/auction.svelte"
 	import PastBets from "$lib/components/past-bets.svelte"
@@ -23,6 +24,10 @@
 	})
 
 	let { data } = $props()
+
+	onMount(() => {
+		removeEmptyBoxes()
+	})
 
 	$effect(() => {
 		saveBoxes(boxes)
