@@ -26,13 +26,15 @@
 	{#if showBetHistory}
 		<div class="bids" transition:slide={{ duration: 300 }}>
 			<div class="bid">
+				<p>Round</p>
 				<p>Tauren</p>
 				<p>Undead</p>
 				<p>Orc</p>
 				<p>Troll</p>
 			</div>
-			{#each bid_history.bids as bid_item (bid_item.id)}
+			{#each bid_history.bids as bid_item, i (bid_item.id)}
 				<div class="bid" animate:flip={{ duration: 300 }}>
+					<p>{bid_history.bids.length - i}</p>
 					{#each bid_item.bids as { bid, winner }}
 						<p class:gold={winner}>{bid}</p>
 					{/each}

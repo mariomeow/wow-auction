@@ -12,18 +12,15 @@
 		bid_history,
 		clearBetHistory,
 		saveBoxes,
-		getBoxes
+		getBoxes,
+		getRaces,
+		updateRaces
 	} from "$lib/scripts/localstorage.svelte"
 	import type { race } from "$lib/types"
 
-	let races = $state<Record<string, race>>({
-		tauren: { name: "Tauren", points: 0, image: "/models/tauren.avif", bet: 0 },
-		undead: { name: "Undead", points: 0, image: "/models/undead.avif", bet: 0 },
-		orc: { name: "Orc", points: 0, image: "/models/orc.avif", bet: 0 },
-		troll: { name: "Troll", points: 0, image: "/models/troll.png", bet: 0 }
-	})
-
 	let { data } = $props()
+
+	let races = $state<Record<string, race>>(getRaces())
 
 	onMount(() => {
 		removeEmptyBoxes()
@@ -31,6 +28,7 @@
 
 	$effect(() => {
 		saveBoxes(boxes)
+		updateRaces(races)
 	})
 
 	let boxes: any[] = $state(getBoxes())
